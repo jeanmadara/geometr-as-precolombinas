@@ -1,0 +1,146 @@
+﻿
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+<script src="https://unpkg.com/ccapture.js@1.1.0/build/CCapture.all.min.js"></script>
+<div id="p5-container" style="width:100%;"></div>
+<script>
+let particles = [];
+let bgImage;
+let capturer;
+let p5Canvas;
+const TOTAL_FRAMES = 30 * 8; // 8 segundos a 30fps
+const CAPTURE_ENABLED = true;
+
+function preload() {
+  bgImage = loadImage('image.png');
+}
+
+function setup() {
+  p5Canvas = createCanvas(1080, 1080);
+  textFont('Courier New');
+  textAlign(CENTER, CENTER);
+  textLeading(54);
+  noStroke();
+
+  if (CAPTURE_ENABLED) {
+    capturer = new CCapture({ format: 'webm', framerate: 30 });
+  }
+
+  const poemText = [
+    '¿Qué es un animal vertebrado?',
+    '¿Un animal vertebrado qué es?',
+    'Corazón, coraza,',
+    'pie, callo,',
+    'callo en los pies.',
+    'Me callo...',
+    'Columna vertebral al suelo.',
+    'Pavimento, tierra,',
+    'tierra, pavimento,',
+    'madera...',
+    'Cansado de renacer,',
+    'cansado de morir,',
+    'podrido en realidad.'
+  ];
+
+  const baseY = height * 0.15;
+  const gap = 58;
+
+  for (let i = 0; i < poemText.length; i++) {
+    particles.push(new TextParticle(poemText[i], width * 0.5, baseY + i * gap, i));
+  }
+}
+
+function draw() {
+  background(12);
+
+  if (bgImage) {
+    push();
+    tint(255, 120);
+    image(bgImage, 0, 0, width, height);
+    pop();
+  }
+
+  fill(0, 0, 0, 55);
+  rect(0, 0, width, height);
+
+  drawScanLines();
+
+  for (const p of particles) {
+    p.update();
+    p.display();
+  }
+
+  // Lógica de captura
+  if (CAPTURE_ENABLED) {
+    if (frameCount === 1) capturer.start();
+    capturer.capture(p5Canvas.canvas);
+    if (frameCount >= TOTAL_FRAMES) {
+      noLoop();
+      capturer.stop();
+      capturer.save();
+    }
+  }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  const baseY = height * 0.15;
+  const gap = 58;
+  for (let i = 0; i < particles.length; i++) {
+    particles[i].originX = width * 0.5;
+    particles[i].originY = baseY + i * gap;
+  }
+}
+
+function drawScanLines() {
+  stroke(255, 12);
+  strokeWeight(1);
+  for (let y = 0; y < height; y += 24) {
+    line(0, y, width, y);
+  }
+  noStroke();
+}
+
+class TextParticle {
+  constructor(text, x, y, index) {
+    this.text = text;
+    this.originX = x;
+    this.originY = y;
+    this.x = x;
+    this.y = y;
+    this.index = index;
+    this.size = 36;
+    this.offset = 0;
+
+    if (text.includes('Corazón') || text.includes('podrido')) {
+      this.color = color(230, 14, 18);
+      this.weight = BOLD;
+      this.size = 38;
+    } else if (text.includes('vertebrado') || text.includes('Columna')) {
+      this.color = color(255);
+      this.weight = BOLD;
+    } else {
+      this.color = color(245);
+      this.weight = NORMAL;
+    }
+  }
+
+  update() {
+    const t = frameCount * 0.012 + this.index * 0.18;
+    this.offset = (noise(this.index * 0.3, frameCount * 0.006) - 0.5) * 100;
+    this.y = this.originY + sin(t) * 22;
+    this.alpha = map(sin(t * 1.2), -1, 1, 180, 255);
+  }
+
+  display() {
+    textSize(this.size);
+    textStyle(this.weight);
+    fill(red(this.color), green(this.color), blue(this.color), this.alpha);
+    text(this.text, this.x + this.offset, this.y);
+
+    if (this.weight === BOLD) {
+      fill(255, 18);
+      rect(this.x + this.offset, this.y + this.size * 0.45, textWidth(this.text) * 0.9, 2);
+    }
+  }
+}
+</script>

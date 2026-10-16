@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>GP-DEMO2025 // Agente 4: Cosmovisión</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <script src="https://unpkg.com/ccapture.js@1.1.0/build/CCapture.all.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      overflow: hidden;
+    }
+
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+    const WIDTH = 1080;
+    const HEIGHT = 1920;
+    const FPS = 25;
+    const TOTAL_FRAMES = 250;
+
+    let shapes = [];
+    let pg;
+    let capturer;
+    let p5Canvas;
+
+    function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+    function easeInOut(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+
+    class Shape {
+      constructor() { this.reset(true); }
+      reset(immediate) {
+        let margin = 100;
+        this.x = random(margin, WIDTH - margin);
+        this.y = random(margin, HEIGHT - margin);
+        this.type = random() < 0.5 ? 'rect' : 'circle';
+        this.size = random(40, 150);
+        // Nacen en los primeros 80 frames
+        this.born = immediate ? floor(random(0, 80)) : frameCount;
+        // Duran lo suficiente para estar presentes en el frame 180
+        this.lifespan = random(120, 180);
+        this.alpha = 0;
+        this.targetAlpha = random(40, 150);
+        this.rotation = random(TWO_PI);
+        this.rotSpeed = random(-0.02, 0.02);
+        this.hasChild = random() < 0.4;
+        this.childOffset = random(0.3, 0.7);
+      }
+
+      update() {
+        let age = frameCount - this.born;
+        if (age < 0) return;
+
+        let fadeIn = constrain(age / 40, 0, 1);
+        let fadeOut = constrain((this.lifespan - age) / 40, 0, 1);
+        this.alpha = easeOut(fadeIn) * easeInOut(fadeOut) * this.targetAlpha;
+        this.rotation += this.rotSpeed;
+
+        // No reseteamos si ya pasó el tiempo y estamos cerca del final
+        if (age > this.lifespan && frameCount < 180) this.reset(false);
+      }
+
+      draw() {
+        if (frameCount < this.born || this.alpha <= 0) return;
+        let age = frameCount - this.born;
+        let prog = constrain(age / 40, 0, 1);
+        let easedProg = easeOut(prog);
+
+        push();
+        translate(this.x, this.y);
+        rotate(this.rotation);
+        stroke(255, this.alpha);
+        strokeWeight(1.2);
+        noFill();
+
+        if (this.type === 'rect') {
+          let s = this.size * easedProg;
+          rect(-s / 2, -s / 2, s, s);
+          if (this.hasChild) {
+            let s2 = s * this.childOffset;
+            stroke(255, this.alpha * 0.5);
+            rect(-s2 / 2, -s2 / 2, s2, s2);
+          }
+        } else {
+          let r = (this.size / 2) * easedProg;
+          ellipse(0, 0, r * 2, r * 2);
+          if (this.hasChild) {
+            stroke(255, this.alpha * 0.5);
+            ellipse(0, 0, r * this.childOffset * 2, r * this.childOffset * 2);
+          }
+        }
+        pop();
+      }
+    }
+
+    class LineEntity {
+      constructor() { this.reset(true); }
+      reset(immediate) {
+        let a = random(TWO_PI);
+        let cx = random(100, WIDTH - 100);
+        let cy = random(100, HEIGHT - 100);
+        let len = random(100, 400);
+        this.x1 = cx + cos(a) * len / 2;
+        this.y1 = cy + sin(a) * len / 2;
+        this.x2 = cx - cos(a) * len / 2;
+        this.y2 = cy - sin(a) * len / 2;
+        this.born = immediate ? floor(random(0, 80)) : frameCount;
+        this.lifespan = random(100, 150);
+        this.alpha = 0;
+        this.targetAlpha = random(30, 110);
+      }
+
+      update() {
+        let age = frameCount - this.born;
+        if (age < 0) return;
+        let fadeIn = constrain(age / 30, 0, 1);
+        let fadeOut = constrain((this.lifespan - age) / 30, 0, 1);
+        this.alpha = easeOut(fadeIn) * fadeOut * this.targetAlpha;
+        if (age > this.lifespan && frameCount < 180) this.reset(false);
+      }
+
+      draw() {
+        if (frameCount < this.born || this.alpha <= 0) return;
+        let age = frameCount - this.born;
+        let prog = constrain(age / 40, 0, 1);
+        let ep = easeOut(prog);
+        let mx = lerp(this.x1, this.x2, ep);
+        let my = lerp(this.y1, this.y2, ep);
+        stroke(255, this.alpha);
+        strokeWeight(0.8);
+        line(this.x1, this.y1, mx, my);
+      }
+    }
+
+    function setup() {
+      p5Canvas = createCanvas(WIDTH, HEIGHT);
+      frameRate(FPS);
+      pixelDensity(1);
+
+      pg = createGraphics(WIDTH, HEIGHT);
+      buildTexture();
+
+      for (let i = 0; i < 28; i++) shapes.push(new Shape());
+      for (let i = 0; i < 20; i++) shapes.push(new LineEntity());
+
+      capturer = new CCapture({ format: 'webm', framerate: FPS });
+    }
+
+    function buildTexture() {
+      pg.loadPixels();
+      for (let i = 0; i < pg.pixels.length; i += 4) {
+        let n = Math.random();
+        let v = n < 0.012 ? floor(random(18, 45)) :
+          n < 0.04 ? floor(random(8, 22)) :
+            floor(random(0, 9));
+        pg.pixels[i] = v;
+        pg.pixels[i + 1] = v;
+        pg.pixels[i + 2] = v;
+        pg.pixels[i + 3] = 255;
+      }
+      pg.updatePixels();
+    }
+
+    function draw() {
+      if (frameCount === 1) capturer.start();
+
+      background(0);
+      image(pg, 0, 0);
+
+      for (let s of shapes) {
+        s.update();
+        s.draw();
+      }
+
+      capturer.capture(p5Canvas.canvas);
+      if (frameCount >= TOTAL_FRAMES) {
+        noLoop();
+        capturer.stop();
+        capturer.save();
+      }
+    }
+  </script>
+</body>
+
+</html>

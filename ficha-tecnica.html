@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ficha Técnica — Geometrías Precolombinas</title>
+  <meta name="description"
+    content="Ficha técnica completa y arquitectura de Geometrías Precolombinas: especificaciones por escena, inventario de 75 piezas arqueológicas, stack tecnológico y requerimientos de exhibición.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&amp;family=Cinzel+Decorative:wght@700&amp;family=JetBrains+Mono:wght@300;400;600&amp;family=Outfit:wght@300;400;500;600;700&amp;display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .tech-page-hero {
+      padding: 130px 0 60px 0;
+      position: relative;
+    }
+    .tech-grid-two {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .tech-spec-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .tech-spec-table tr {
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .tech-spec-table tr:last-child {
+      border-bottom: none;
+    }
+    .tech-spec-table td {
+      padding: 10px 14px;
+      vertical-align: top;
+    }
+    .tech-spec-table td:first-child {
+      width: 32%;
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .tech-spec-table td:last-child {
+      color: var(--text-main);
+    }
+    .tech-scene-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      margin-bottom: 24px;
+      backdrop-filter: blur(12px);
+      transition: border-color 0.3s ease;
+    }
+    .tech-scene-card:hover {
+      border-color: var(--border-glow);
+    }
+    .tech-scene-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 14px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .tech-scene-header h3 {
+      font-family: var(--font-display);
+      color: var(--gold-light);
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .tech-badge {
+      display: inline-block;
+      font-family: var(--font-code);
+      font-size: 0.72rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(229, 185, 90, 0.12);
+      border: 1px solid var(--border-subtle);
+      color: var(--gold-primary);
+    }
+    .back-btn-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      background: rgba(229, 185, 90, 0.08);
+      border: 1px solid var(--border-subtle);
+      border-radius: 999px;
+      color: var(--gold-light);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all 0.25s ease;
+    }
+    .back-btn-pill:hover {
+      background: rgba(229, 185, 90, 0.2);
+      border-color: var(--gold-primary);
+      transform: translateX(-3px);
+    }
+    @media print {
+      .site-header, .site-footer, .back-btn-pill, .print-btn {
+        display: none !important;
+      }
+      body {
+        background: #fff !important;
+        color: #000 !important;
+      }
+      .tech-scene-card, .chronology-table-card {
+        border: 1px solid #ccc !important;
+        background: #fff !important;
+        color: #000 !important;
+        page-break-inside: avoid;
+      }
+      .tech-spec-table td, th {
+        color: #000 !important;
+        border-color: #ddd !important;
+      }
+      .editorial-title, .hero-dossier-title {
+        color: #000 !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       HEADER / NAVEGACIÓN FIJA
+       ============================================================ -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-wrap">
+        <div class="brand-glyph">🔺</div>
+        <div class="brand-text">
+          <h1>Geometrías Precolombinas</h1>
+          <p>Ficha Técnica &amp; Arquitectura</p>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <a href="index.html#archivo" class="back-btn-pill">
+          <span>←</span> Volver al Dossier
+        </a>
+        <button onclick="window.print()" class="btn-pill print-btn" title="Imprimir o guardar como PDF">
+          <span>🖨</span> Imprimir / PDF
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       CABECERA EDITORIAL
+       ============================================================ -->
+  <section class="tech-page-hero">
+    <div class="container">
+      <div class="hero-curatorial-pill">
+        <span class="pulse-dot"></span>
+        <span>Documento Técnico de Sala · Archivo Digital</span>
+      </div>
+
+      <h2 class="hero-dossier-title" style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 16px;">
+        Ficha Técnica &amp; Arquitectura
+      </h2>
+      <p class="section-intro-text" style="max-width: 800px; margin-bottom: 32px;">
+        Especificaciones técnicas, corpus arqueológico clasificado, requerimientos de sala y parámetros algorítmicos para montaje escénico, exhibición en museos y festivales de nuevos medios.
+      </p>
+
+      <!-- DATOS GENERALES -->
+      <div class="tech-scene-card" style="border-color: var(--border-glow);">
+        <div class="tech-scene-header">
+          <h3><span>🏛</span> Datos Generales del Proyecto</h3>
+          <span class="tech-badge">PRODUCCIÓN 2026</span>
+        </div>
+        <table class="tech-spec-table">
+          <tbody>
+            <tr>
+              <td>Título</td>
+              <td><strong>Geometrías Precolombinas</strong> — Laboratorio Escénico "Geometrías Vivas"</td>
+            </tr>
+            <tr>
+              <td>Autoría</td>
+              <td><strong>Jean Carlos Correa</strong> &amp; <strong>Darla Alarcón</strong> · Contacto: @jeanmadara</td>
+            </tr>
+            <tr>
+              <td>País y Año</td>
+              <td>Ecuador · 2026</td>
+            </tr>
+            <tr>
+              <td>Disciplina</td>
+              <td>Arte generativo · Código creativo · Escenografía digital · Performance en vivo</td>
+            </tr>
+            <tr>
+              <td>Técnica</td>
+              <td>Programación en tiempo real con <strong>p5.js</strong> (2D &amp; WebGL) + Diseño sonoro en <strong>Sonic Pi</strong></td>
+            </tr>
+            <tr>
+              <td>Formato</td>
+              <td>5 escenas audiovisuales generativas ejecutables en tiempo real (HTML5 / JavaScript)</td>
+            </tr>
+            <tr>
+              <td>Duración Total</td>
+              <td>~16 minutos (material generativo continuo e interactivo)</td>
+            </tr>
+            <tr>
+              <td>Territorio</td>
+              <td>Litoral ecuatoriano — Costa del Pacífico (3500 a.C. – 1530 d.C.)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FICHAS POR ESCENA
+       ============================================================ -->
+  <section class="dramaturgy-section" style="padding-top: 0;">
+    <div class="container">
+      <div class="section-editorial-header">
+        <span class="editorial-tag">Catálogo de Escenas</span>
+        <h3 class="editorial-title">Fichas Técnicas por Escena</h3>
+      </div>
+
+      <!-- Escena 1 -->
+      <div class="tech-scene-card">
+        <div class="tech-scene-header">
+          <h3><span>🐆</span> Escena 1 · Geometric Heartbeat</h3>
+          <span class="tech-badge">WEBGL 3D · 3:00 min</span>
+        </div>
+        <table class="tech-spec-table">
+          <tbody>
+            <tr>
+              <td>Tipo</td>
+              <td>Visualización 3D generativa interactiva</td>
+            </tr>
+            <tr>
+              <td>Archivo</td>
+              <td><code class="source-path-code">sketchs/scene1/sketch.js</code></td>
+            </tr>
+            <tr>
+              <td>Tecnología</td>
+              <td>p5.js (WEBGL), CCapture.js</td>
+            </tr>
+            <tr>
+              <td>Resolución</td>
+              <td>1280 × 720 px (adaptable a 16:9 y 9:16)</td>
+            </tr>
+            <tr>
+              <td>Referencia</td>
+              <td><strong>GA-7-876-78</strong> · Cabeza y torso antropomorfo / Jaguar zoomorfo (Cultura Tolita, 500 a.C. – 500 d.C.)</td>
+            </tr>
+            <tr>
+              <td>Modelo 3D</td>
+              <td><code>tolita2.obj</code> (2.2 MB, normalizado en malla wireframe)</td>
+            </tr>
+            <tr>
+              <td>Paleta</td>
+              <td>Dorado pulsante (<code>#FFA064</code>) → Blanco (<code>#FFFFFF</code>) sobre negro absoluto</td>
+            </tr>
+            <tr>
+              <td>Comportamiento</td>
+              <td>Respiración sinusoidal de vértices · Pulso cromático · Rotación progresiva en ejes X, Y y Z</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Escena 2 -->
+      <div class="tech-scene-card">
+        <div class="tech-scene-header">
+          <h3><span>♀</span> Escena 2 · Archivo de Mujeres</h3>
+          <span class="tech-badge">SLIDESHOW CINEMATOGRÁFICO · 3:55 min</span>
+        </div>
+        <table class="tech-spec-table">
+          <tbody>
+            <tr>
+              <td>Tipo</td>
+              <td>Slideshow cinematográfico generativo continuo</td>
+            </tr>
+            <tr>
+              <td>Archivo</td>
+              <td><code class="source-path-code">sketchs/scene2/sketch.js</code></td>
+            </tr>
+            <tr>
+              <td>Tecnología</td>
+              <td>p5.js (Canvas 2D), CCapture.js</td>
+            </tr>
+            <tr>
+              <td>Corpus</td>
+              <td><strong>47 fotografías</strong> de figuras femeninas de arcilla y Venus ceremoniales</td>
+            </tr>
+            <tr>
+              <td>Culturas</td>
+              <td>Valdivia (9), Machalilla (7), Chorrera (6), Bahía (5), Tolita (2), Guangala (4), Jama-Coaque (10), Milagro (1), Manteño (5)</td>
+            </tr>
+            <tr>
+              <td>Comportamiento</td>
+              <td>Crossfade continuo · Zoom progresivo Ken Burns (0.85 → 1.0) · 4 seg exposición + 1 seg transición</td>
+            </tr>
+            <tr>
+              <td>Diseño Sonoro</td>
+              <td>Voces procesadas de América Orrala y su nieta · Capas de susurros y cantos ancestrales</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Escena 3a -->
+      <div class="tech-scene-card">
+        <div class="tech-scene-header">
+          <h3><span>🕸</span> Escena 3a · América Orrala (Retrato Generativo)</h3>
+          <span class="tech-badge">SISTEMA DE PARTÍCULAS · Tiempo Real</span>
+        </div>
+        <table class="tech-spec-table">
+          <tbody>
+            <tr>
+              <td>Tipo</td>
+              <td>Retrato emergente estocástico por agentes autónomos</td>
+            </tr>
+            <tr>
+              <td>Archivo</td>
+              <td><code class="source-path-code">sketchs/scene3-1/sketch.js</code></td>
+            </tr>
+            <tr>
+              <td>Tecnología</td>
+              <td>p5.js (Canvas 2D) · Algoritmo de círculos errantes (adaptado de Vamoss #624879)</td>
+            </tr>
+            <tr>
+              <td>Resolución</td>
+              <td>1920 × 1080 px</td>
+            </tr>
+            <tr>
+              <td>Imagen Fuente</td>
+              <td><code>orrala.png</code> (3.1 MB) · Fotografía de la Maestra Alfarera de la Comuna Valdivia</td>
+            </tr>
+            <tr>
+              <td>Agentes</td>
+              <td><strong>100 partículas autónomas</strong> con muestreo de brillo por pixel e inversión por umbral (>70)</td>
+            </tr>
+            <tr>
+              <td>Evolución</td>
+              <td>El rostro no existe al inicio; emerge progresivamente tejiéndose sobre el lienzo oscuro</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Escena 3b -->
+      <div class="tech-scene-card">
+        <div class="tech-scene-header">
+          <h3><span>🏺</span> Escena 3b · Vasijas Funerarias</h3>
+          <span class="tech-badge">TRÁNSITO RITUAL · 1:40 min / 4:00 min</span>
+        </div>
+        <table class="tech-spec-table">
+          <tbody>
+            <tr>
+              <td>Tipo</td>
+              <td>Slideshow cinematográfico generativo de vasijas y urnas de entierro</td>
+            </tr>
+            <tr>
+              <td>Archivo</td>
+              <td><code class="source-path-code">sketchs/scene3-2/sketch.js</code></td>
+            </tr>
+            <tr>
+              <td>Tecnología</td>
+              <td>p5.js (Canvas 2D), CCapture.js</td>
+            </tr>
+            <tr>
+              <td>Corpus</td>
+              <td><strong>20 fotografías</strong> de vasijas ceremoniales mortuorias</td>
+            </tr>
+            <tr>
+              <td>Culturas</td>
+              <td>Jama-Coaque (1), Manteño (7), Milagro-Quevedo (9), Tolita (3)</td>
+            </tr>
+            <tr>
+              <td>Efectos</td>
+              <td>Transiciones sutiles de escala, opacidad y disolución sobre vacío negro</td>
+            </tr>
+            <tr>
+              <td>Diseño Sonoro</td>
+              <td>Ocarinas y silbatos zoomorfos del archivo del MAAC</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Escena 4 -->
+      <div class="tech-scene-card">
+        <div class="tech-scene-header">
+          <h3><span>◬</span> Escena 4 · Cosmovisión (Geometría Progresiva)</h3>
+          <span class="tech-badge">ABSTRACCIÓN CINÉTICA · 3:00 min</span>
+        </div>
+        <table class="tech-spec-table">
+          <tbody>
+            <tr>
+              <td>Tipo</td>
+              <td>Composición cinética abstracta inspirada en sellos planos y cilíndricos</td>
+            </tr>
+            <tr>
+              <td>Archivo</td>
+              <td><code class="source-path-code">sketchs/scene4/sketch.js</code></td>
+            </tr>
+            <tr>
+              <td>Tecnología</td>
+              <td>p5.js (modo instancia), CCapture.js</td>
+            </tr>
+            <tr>
+              <td>Elementos</td>
+              <td>28 formas concéntricas (rectángulos/círculos) + 20 líneas con trayectoria autónoma</td>
+            </tr>
+            <tr>
+              <td>Textura</td>
+              <td>Ruido estático de grano cinematográfico generado directamente en buffer de pixeles</td>
+            </tr>
+            <tr>
+              <td>Easing</td>
+              <td><code>easeOut</code> (aparición), <code>easeInOut</code> (desvanecimiento orgánico)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Escena 5 -->
+      <div class="tech-scene-card">
+        <div class="tech-scene-header">
+          <h3><span>🌊</span> Escena 5 · El Agua como Vínculo</h3>
+          <span class="tech-badge">COMPOSICIÓN MULTICAPA · 3:10 min</span>
+        </div>
+        <table class="tech-spec-table">
+          <tbody>
+            <tr>
+              <td>Tipo</td>
+              <td>Composición oceánica multicapa sobre rutas de navegación del Spondylus</td>
+            </tr>
+            <tr>
+              <td>Archivo</td>
+              <td><code class="source-path-code">sketchs/scene5/sketch.js</code></td>
+            </tr>
+            <tr>
+              <td>Tecnología</td>
+              <td>p5.js (Canvas 2D)</td>
+            </tr>
+            <tr>
+              <td>Estructura</td>
+              <td>5 capas superpuestas: rutas horizontales, 7 olas geométricas, 22 nodos conectados por proximidad, 120 partículas y 8 palabras poéticas</td>
+            </tr>
+            <tr>
+              <td>Paleta</td>
+              <td>Tonos marinos fríos HSB 195°–215° sobre fondo abisal (<code>#020d18</code>) con estela de persistencia</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       INVENTARIO DE PIEZAS & STACK
+       ============================================================ -->
+  <section class="pillars-section" style="padding-top: 0;">
+    <div class="container">
+      <div class="section-editorial-header">
+        <span class="editorial-tag">Catalogación</span>
+        <h3 class="editorial-title">Inventario de las 75 Piezas Arqueológicas</h3>
+      </div>
+
+      <div class="chronology-table-card" style="margin-bottom: 50px;">
+        <table class="chrono-table">
+          <thead>
+            <tr>
+              <th>Cultura</th>
+              <th>Período</th>
+              <th>Figuras Femeninas</th>
+              <th>Vasijas Funerarias</th>
+              <th>Modelos 3D</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Valdivia</strong></td>
+              <td>Formativo</td>
+              <td style="font-family: var(--font-code);">9</td>
+              <td style="font-family: var(--font-code);">—</td>
+              <td style="font-family: var(--font-code);">2</td>
+              <td style="font-family: var(--font-code); color: var(--gold-primary);"><strong>11</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Machalilla</strong></td>
+              <td>Formativo</td>
+              <td style="font-family: var(--font-code);">7</td>
+              <td style="font-family: var(--font-code);">—</td>
+              <td style="font-family: var(--font-code);">—</td>
+              <td style="font-family: var(--font-code); color: var(--gold-primary);"><strong>7</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Chorrera</strong></td>
+              <td>Formativo</td>
+              <td style="font-family: var(--font-code);">6</td>
+              <td style="font-family: var(--font-code);">—</td>
+              <td style="font-family: var(--font-code);">—</td>
+              <td style="font-family: var(--font-code); color: var(--gold-primary);"><strong>6</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Bahía</strong></td>
+              <td>Desarrollo Regional</td>
+              <td style="font-family: var(--font-code);">5</td>
+              <td style="font-family: var(--font-code);">—</td>
+              <td style="font-family: var(--font-code);">—</td>
+              <td style="font-family: var(--font-code); color: var(--gold-primary);"><strong>5</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Tolita</strong></td>
+              <td>Desarrollo Regional</td>
+              <td style="font-family: var(--font-code);">2</td>
+              <td style="font-family: var(--font-code);">3</td>
+              <td style="font-family: var(--font-code);">4</td>
+              <td style="font-family: var(--font-code); color: var(--gold-primary);"><strong>9</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Guangala</strong></td>
+              <td>Desarrollo Regional</td>
+              <td style="font-family: var(--font-code);">4</td>
+              <td style="font-family: var(--font-code);">—</td>
+              <td style="font-family: var(--font-code);">—</td>
+              <td style="font-family: var(--font-code); color: var(--gold-primary);"><strong>4</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Jama-Coaque</strong></td>
+              <td>Desarrollo Regional</td>
+              <td style="font-family: var(--font-code);">10</td>
+              <td style="font-family: var(--font-code);">1</td>
+              <td style="font-family: var(--font-code);">—</td>
+              <td style="font-family: var(--font-code); color: var(--gold-primary);"><strong>11</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Milagro-Quevedo</strong></td>
+              <td>Integración</td>
+              <td style="font-family: var(--font-code);">1</td>
+              <td style="font-family: var(--font-code);">9</td>
+              <td style="font-family: var(--font-code);">—</td>
+              <td style="font-family: var(--font-code); color: var(--gold-primary);"><strong>10</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Manteño</strong></td>
+              <td>Integración</td>
+              <td style="font-family: var(--font-code);">5</td>
+              <td style="font-family: var(--font-code);">7</td>
+              <td style="font-family: var(--font-code);">—</td>
+              <td style="font-family: var(--font-code); color: var(--gold-primary);"><strong>12</strong></td>
+            </tr>
+            <tr style="background: rgba(229, 185, 90, 0.08); font-weight: 700;">
+              <td><strong>TOTAL GENERAL</strong></td>
+              <td><strong>3 Horizontes</strong></td>
+              <td style="font-family: var(--font-code); color: var(--gold-light);">49</td>
+              <td style="font-family: var(--font-code); color: var(--gold-light);">20</td>
+              <td style="font-family: var(--font-code); color: var(--gold-light);">6</td>
+              <td style="font-family: var(--font-code); color: var(--gold-light); font-size: 1.05rem;">75 piezas</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tech-grid-two">
+        <!-- Stack Técnico -->
+        <div class="tech-scene-card">
+          <div class="tech-scene-header">
+            <h3><span>⚙</span> Stack Tecnológico</h3>
+          </div>
+          <table class="tech-spec-table">
+            <tbody>
+              <tr>
+                <td>Motor Gráfico</td>
+                <td><strong>p5.js 1.9.0</strong> (2D &amp; WebGL)</td>
+              </tr>
+              <tr>
+                <td>Diseño Sonoro</td>
+                <td><strong>Sonic Pi 4.x</strong> (live coding y síntesis algorítmica)</td>
+              </tr>
+              <tr>
+                <td>Captura / Video</td>
+                <td><strong>CCapture.js</strong> + FFmpeg + OpenCV</td>
+              </tr>
+              <tr>
+                <td>Procesamiento</td>
+                <td>Python + Pillow + rembg</td>
+              </tr>
+              <tr>
+                <td>Distribución</td>
+                <td>HTML5 / CSS3 / JS Vanilla autocontenido</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Requerimientos -->
+        <div class="tech-scene-card">
+          <div class="tech-scene-header">
+            <h3><span>🏛</span> Requerimientos de Exhibición</h3>
+          </div>
+          <table class="tech-spec-table">
+            <tbody>
+              <tr>
+                <td>Proyección</td>
+                <td>Full HD (1920 × 1080) · Mínimo 3000 lúmenes</td>
+              </tr>
+              <tr>
+                <td>Espacio</td>
+                <td>Sala en penumbra total o control de blackout</td>
+              </tr>
+              <tr>
+                <td>Audio</td>
+                <td>Sistema estéreo o multicanal de sala (PA)</td>
+              </tr>
+              <tr>
+                <td>Hardware</td>
+                <td>Laptop o mini-PC con soporte WebGL en navegador</td>
+              </tr>
+              <tr>
+                <td>Modalidades</td>
+                <td>Performance escénica · Instalación multicanal · Web</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-credits">
+        <strong>🔺 Geometrías Precolombinas</strong> — Ficha Técnica Oficial
+      </div>
+      <p>
+        Creación: <strong>Jean Carlos Correa</strong> &amp; <strong>Darla Alarcón</strong> · 2026
+      </p>
+      <div style="margin-top: 20px;">
+        <a href="index.html" class="back-btn-pill">
+          <span>←</span> Regresar a la Portada del Dossier
+        </a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>

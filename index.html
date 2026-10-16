@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geometrías Precolombinas — Dossier Artístico &amp; Escénico</title>
+  <meta name="description"
+    content="Dossier artístico y escénico de Geometrías Precolombinas: laboratorio de arte generativo y nuevos medios basado en 75 piezas arqueológicas del litoral ecuatoriano. Creación: Jean Carlos Correa &amp; Darla Alarcón.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&amp;family=Cinzel+Decorative:wght@700&amp;family=JetBrains+Mono:wght@300;400;600&amp;family=Outfit:wght@300;400;500;600;700&amp;display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- ============================================================
+       HEADER / NAVEGACIÓN FIJA
+       ============================================================ -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#inicio" class="brand-wrap">
+        <div class="brand-glyph">🔺</div>
+        <div class="brand-text">
+          <h1>Geometrías Precolombinas</h1>
+          <p>Dossier Artístico &amp; Escénico</p>
+        </div>
+      </a>
+
+      <nav class="nav-tabs" aria-label="Secciones del dossier">
+        <button class="nav-btn active" onclick="scrollToId('inicio')">Portada</button>
+        <button class="nav-btn" onclick="scrollToId('concepto')">Concepto</button>
+        <button class="nav-btn" onclick="scrollToId('obra-en-vivo')">Obra en Vivo</button>
+        <button class="nav-btn" onclick="scrollToId('puesta-en-escena')">Montaje</button>
+        <button class="nav-btn" onclick="scrollToId('ep-sonoro')">EP Sonoro</button>
+        <button class="nav-btn" onclick="scrollToId('archivo')">Documentos</button>
+      </nav>
+
+      <div class="header-actions">
+        <button onclick="toggleFullscreen()" class="btn-pill" title="Modo proyección pantalla completa (F)">
+          <span>⛶</span> Modo Sala
+        </button>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- ============================================================
+       §1 · PORTADA
+       ============================================================ -->
+  <section class="dossier-hero" id="inicio">
+    <div class="container">
+
+      <div class="hero-curatorial-pill">
+        <span class="pulse-dot"></span>
+        <span>Laboratorio Escénico &nbsp;·&nbsp; Nuevos Medios &nbsp;·&nbsp; Costa del Pacífico Ecuatorial</span>
+      </div>
+
+      <h2 class="hero-dossier-title">Geometrías<br>Precolombinas</h2>
+
+      <p class="hero-statement-quote">
+        «Cinco mil años separan a las Venus de Valdivia de esta pantalla.
+        La distancia, sin embargo, es una ilusión: las mismas espirales
+        que un alfarero trazó en barro húmedo circulan hoy como funciones
+        matemáticas en tiempo real. El gesto no ha cambiado. Solo el material.»
+      </p>
+
+      <div class="hero-meta-credits">
+        <div class="meta-credit-box">
+          <span class="meta-credit-label">Creación &amp; Escena</span>
+          <span class="meta-credit-val">Jean Carlos Correa &amp; Darla Alarcón</span>
+        </div>
+        <div class="meta-credit-box">
+          <span class="meta-credit-label">Territorio</span>
+          <span class="meta-credit-val">Costa del Pacífico Ecuatorial</span>
+        </div>
+        <div class="meta-credit-box">
+          <span class="meta-credit-label">Cronología</span>
+          <span class="meta-credit-val">3500 a.C. – 1530 d.C.</span>
+        </div>
+        <div class="meta-credit-box">
+          <span class="meta-credit-label">Formato</span>
+          <span class="meta-credit-val">Performance + Arte Generativo</span>
+        </div>
+        <div class="meta-credit-box">
+          <span class="meta-credit-label">Archivo de referencia</span>
+          <span class="meta-credit-val">MAAC · Salango · Amantes de Sumpa</span>
+        </div>
+      </div>
+
+      <div class="hero-actions-row">
+        <button class="btn-primary-dossier" onclick="scrollToId('obra-en-vivo')">
+          <span>▶</span> Ver la obra en vivo
+        </button>
+        <a href="docs/pdf/Dossier%20Geometr%C3%ADas%20Precolombinas.pdf" target="_blank" class="btn-secondary-dossier">
+          <span>📖</span> Dossier completo
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       §2 · CONCEPTO
+       ============================================================ -->
+  <section class="pillars-section" id="concepto">
+    <div class="container">
+      <div class="section-editorial-header">
+        <span class="editorial-tag">Concepto Artístico</span>
+        <h3 class="editorial-title">Cuerpo — Imagen — Territorio</h3>
+        <p class="section-intro-text">
+          <em>Geometrías Precolombinas</em> es un laboratorio escénico que traduce
+          75 piezas arqueológicas del litoral ecuatoriano en organismos visuales
+          generativos. No se trata de digitalización documental ni de homenaje ilustrativo:
+          cada objeto se <strong>reactiva</strong> como sistema computacional vivo,
+          ejecutando en tiempo real el ritmo y la memoria formal que contiene.
+        </p>
+      </div>
+
+      <div class="pillars-grid">
+        <article class="pillar-card">
+          <span class="pillar-num">PILAR I</span>
+          <h4 class="pillar-title">Arqueología Algorítmica</h4>
+          <p class="pillar-text">
+            Cada pieza prehispánica es leída como un sistema generativo latente.
+            El código no ilustra el objeto: ejecuta su lógica interna. La espiral
+            de una vasija Valdivia se convierte en función sinusoidal; el jaguar
+            Tolita en malla tridimensional con respiración propia.
+          </p>
+        </article>
+
+        <article class="pillar-card">
+          <span class="pillar-num">PILAR II</span>
+          <h4 class="pillar-title">El Cuerpo como Territorio</h4>
+          <p class="pillar-text">
+            La presencia física en escena no decora: <em>encarna</em>. El palo
+            santo, la red de pesca, la quena y la danza del pez dialogan con
+            las proyecciones generativas, disolviendo la frontera entre la
+            escena física y el espacio digital.
+          </p>
+        </article>
+
+        <article class="pillar-card">
+          <span class="pillar-num">PILAR III</span>
+          <h4 class="pillar-title">El Código como Ofrenda</h4>
+          <p class="pillar-text">
+            En el mundo prehispánico, la ofrenda funeraria trasladaba la vida
+            al plano sagrado. Aquí, cada bucle algorítmico a 30 fotogramas
+            por segundo cumple esa función: libera al artefacto de la vitrina
+            y le confiere vida autónoma.
+          </p>
+        </article>
+      </div>
+
+      <!-- Tabla cronológica compacta -->
+      <div class="section-editorial-header" style="margin-top: 72px;">
+        <span class="editorial-tag">Universo de referencia</span>
+        <h3 class="editorial-title">9 Culturas · 5 000 años · 75 piezas</h3>
+        <p class="section-intro-text">
+          La obra recorre tres grandes horizontes del litoral ecuatoriano,
+          de los primeros ceramistas de América hasta los últimos navegantes
+          del Spondylus antes de la colonia.
+        </p>
+      </div>
+
+      <div class="chronology-table-card">
+        <table class="chrono-table">
+          <thead>
+            <tr>
+              <th>Período</th>
+              <th>Cronología</th>
+              <th>Culturas</th>
+              <th>Artefactos de referencia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="period-badge">Formativo</span></td>
+              <td style="font-family: var(--font-code);">3500 – 500 a.C.</td>
+              <td><strong>Valdivia · Machalilla · Chorrera</strong></td>
+              <td>Venus de fertilidad, cuencos ceremoniales, figurines modelados a mano — las primeras cerámicas de
+                América.</td>
+            </tr>
+            <tr>
+              <td><span class="period-badge">Desarrollo Regional</span></td>
+              <td style="font-family: var(--font-code);">500 a.C. – 500 d.C.</td>
+              <td><strong>Tolita · Bahía · Jama-Coaque · Guangala</strong></td>
+              <td>Jaguares zoomorfos, máscaras de oro y platino, chamanes en éxtasis ritual.</td>
+            </tr>
+            <tr>
+              <td><span class="period-badge">Integración</span></td>
+              <td style="font-family: var(--font-code);">500 – 1530 d.C.</td>
+              <td><strong>Manteño-Huancavilca · Milagro-Quevedo</strong></td>
+              <td>Urnas funerarias, sillas de poder, balsas oceánicas y rutas del Spondylus.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       §3 · VISOR ÚNICO — único acceso interactivo a las 6 escenas
+       ============================================================ -->
+  <section class="dossier-viewer-section" id="obra-en-vivo">
+    <div class="container">
+      <div class="section-editorial-header">
+        <span class="editorial-tag">Experiencia Generativa · Tiempo Real</span>
+        <h3 class="editorial-title">Laboratorio en Ejecución</h3>
+        <p class="section-intro-text">
+          Selecciona cualquiera de las 5 escenas generativas para interactuar con el organismo visual
+          y leer su ficha curatorial: pieza arqueológica de referencia, diseño sonoro,
+          acción escénica y especificación técnica.
+        </p>
+      </div>
+
+      <div class="viewer-wrapper" id="stageWrapper">
+
+        <!-- Selector dinámico de escenas (app.js) -->
+        <nav class="scene-nav-selector" id="sceneNavTabs" aria-label="Escenas del laboratorio"></nav>
+
+        <!-- Barra de controles -->
+        <div class="viewer-control-bar">
+          <div class="viewer-header-info">
+            <span class="viewer-num-badge" id="viewIndexBadge">01</span>
+            <div class="viewer-title-box">
+              <h3>
+                <span id="viewMainTitle">Geometric Heartbeat</span>
+                <span class="viewer-poetic-title" id="viewPoeticSubtitle">«El latido de la forma»</span>
+              </h3>
+              <div class="viewer-sub-meta">
+                <span id="viewTagBadge" class="viewer-tag-badge">ESCENA 1 · WEBGL 3D</span>
+                <span>·</span>
+                <span id="viewCultureBadge">Cultura Tolita (500 a.C. – 500 d.C.)</span>
+                <span>·</span>
+                <span id="viewDurationBadge" style="font-family: var(--font-code); color: var(--gold-primary);">3:00
+                  min</span>
+                <span>·</span>
+                <span class="source-path-code" id="dossierSourcePath">sketchs/scene1/sketch.js</span>
+                <span>·</span>
+                <span class="eco-indicator paused" id="ecoIndicator">⏸ En pausa</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="viewer-actions">
+            <button class="btn-viewer-ctrl" id="btnTogglePlayback" onclick="togglePlayback()"
+              title="Iniciar o pausar el sketch (Espacio)">▶ Iniciar</button>
+            <button class="btn-viewer-ctrl" onclick="reloadScene()" title="Reiniciar (R)">🔄 Reiniciar</button>
+            <button class="btn-viewer-ctrl" onclick="prevScene()" title="Escena anterior (←)">◀</button>
+            <button class="btn-viewer-ctrl" onclick="nextScene()" title="Escena siguiente (→)">▶</button>
+            <a href="sketchs/scene1/index.html" target="_blank" class="btn-viewer-ctrl" id="btnOpenDirect"
+              title="Abrir en ventana separada">↗ Abrir lienzo</a>
+            <button class="btn-viewer-ctrl primary" onclick="toggleFullscreen()" title="Pantalla completa (F)">⛶
+              Proyección sala</button>
+          </div>
+        </div>
+
+        <!-- Canvas principal -->
+        <div class="viewer-viewport">
+          <div class="stage-loading-overlay" id="loadingOverlay">
+            <div class="spinner"></div>
+            <p style="font-family: var(--font-code); font-size: 0.82rem; color: var(--gold-light);">Invocando geometría
+              en tiempo real…</p>
+          </div>
+          <div class="stage-paused-overlay visible" id="pausedOverlay">
+            <div class="paused-card">
+              <span class="paused-badge">⏸ Laboratorio en Pausa</span>
+              <h4>Experiencia Interactiva en Tiempo Real</h4>
+              <p>El bucle generativo inicia en pausa para optimizar el rendimiento de tu equipo. Haz clic para activar
+                el lienzo en vivo.</p>
+              <button class="btn-primary-dossier" onclick="resumePlayback(true)">
+                <span>▶</span> Iniciar laboratorio en vivo
+              </button>
+            </div>
+          </div>
+          <iframe id="stageFrame" src="" allow="accelerometer; autoplay; encrypted-media; gyroscope"
+            allowfullscreen></iframe>
+        </div>
+
+        <!-- Ficha curatorial de la escena activa -->
+        <div class="viewer-dossier-drawer">
+          <div>
+            <div class="drawer-statement-title">✦ Declaración Curatorial</div>
+            <p class="drawer-statement-body" id="dossierStatement">Selecciona una escena para leer su declaración
+              curatorial.</p>
+            <div class="drawer-curatorial-detail" id="dossierDetail"></div>
+          </div>
+          <div class="drawer-specs-column">
+            <div class="spec-item">
+              <span class="spec-lbl">Pieza arqueológica</span>
+              <span class="spec-val" id="dossierArtifact">—</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-lbl">Diseño sonoro (Sonic Pi)</span>
+              <span class="spec-val" id="dossierAudio">—</span>
+              <div><span class="audio-tag-chip" id="dossierAudioTag">—</span></div>
+            </div>
+            <div class="spec-item">
+              <span class="spec-lbl">Acción escénica</span>
+              <span class="spec-val" id="dossierCoreo">—</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-lbl">Especificación técnica</span>
+              <span class="spec-val" id="dossierTech"
+                style="font-family: var(--font-code); font-size: 0.75rem;">—</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       §4 · PUESTA EN ESCENA — Registro en Sala (Conjuras de la Umiña)
+       ============================================================ -->
+  <section class="dramaturgy-section" id="puesta-en-escena">
+    <div class="container">
+      <div class="section-editorial-header">
+        <span class="editorial-tag">Puesta en Escena · Videodanza</span>
+        <h3 class="editorial-title">Conjurando a U-miña</h3>
+        <p class="section-intro-text">
+          Videodanza que explora el acto ritual de invocar a la diosa marina de Manta. Un diálogo vivo entre el cuerpo,
+          el entorno natural y los nuevos medios generativos.
+        </p>
+      </div>
+
+      <div class="stage-video-card">
+        <div class="video-responsive-wrapper">
+          <iframe src="https://www.youtube-nocookie.com/embed/RZM7nd7wUmA?rel=0"
+            title="Videodanza - Conjurando a U-miña" loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div class="stage-video-footer">
+          <div class="stage-video-info">
+            <h4>Videodanza — Conjurando a U-miña</h4>
+            <p>Exploración escénica y audiovisual · Creación: Darla Alarcón</p>
+          </div>
+          <div class="stage-video-actions">
+            <a href="https://www.youtube.com/watch?v=RZM7nd7wUmA" target="_blank" rel="noopener noreferrer"
+              class="btn-secondary-dossier" style="padding: 10px 20px; font-size: 0.82rem;">
+              <span>↗</span> Ver en YouTube
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Requerimientos técnicos -->
+      <div class="section-editorial-header" style="margin-top: 64px;">
+        <span class="editorial-tag">Rider Técnico</span>
+        <h3 class="editorial-title">Condiciones Mínimas de Sala</h3>
+      </div>
+
+      <div class="pillars-grid">
+        <article class="pillar-card">
+          <span class="pillar-num">PROYECCIÓN</span>
+          <h4 class="pillar-title">Imagen</h4>
+          <p class="pillar-text">
+            Proyector 4K o LED de alta luminosidad (mínimo 5 000 lúmenes).
+            Resolución nativa 1920 × 1080 en 16:9 para escenas generativas.
+            Modo vertical 1080 × 1920 disponible para festivales de nuevos medios.
+            Superficie mínima de proyección: 3 × 2 m.
+          </p>
+        </article>
+
+        <article class="pillar-card">
+          <span class="pillar-num">SONIDO</span>
+          <h4 class="pillar-title">Audio</h4>
+          <p class="pillar-text">
+            Sistema multicanal (estéreo mínimo, 5.1 recomendado). Diseño sonoro
+            producido en Sonic Pi con samples del archivo del MAAC. La partitura
+            completa se entrega en WAV y MIDI por acto.
+          </p>
+        </article>
+
+        <article class="pillar-card">
+          <span class="pillar-num">ILUMINACIÓN</span>
+          <h4 class="pillar-title">Luz</h4>
+          <p class="pillar-text">
+            Control de blackout total y penumbra independiente de la proyección.
+            Cues específicos por acto en el guión técnico (GUION.md).
+            Sala oscura sin luz ambiental externa durante la función.
+          </p>
+        </article>
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <!-- ============================================================
+       §5 · EP SONORO — Geometrías Precolombinas
+       ============================================================ -->
+  <section class="dramaturgy-section" id="ep-sonoro">
+    <div class="container">
+      <div class="section-editorial-header">
+        <span class="editorial-tag">Diseño Sonoro · EP</span>
+        <h3 class="editorial-title">Geometrías Precolombinas</h3>
+        <p class="section-intro-text">
+          Partitura generativa creada en Sonic Pi: cada pista es el resultado de traducir
+          la lógica formal de una pieza arqueológica al lenguaje del sonido algorítmico.
+          Ritmos del litoral ecuatoriano reactivados como código en tiempo real.
+        </p>
+      </div>
+
+      <div class="stage-video-card">
+        <div style="border-radius: 12px; overflow: hidden;">
+          <iframe
+            width="100%"
+            height="450"
+            scrolling="no"
+            frameborder="no"
+            allow="autoplay"
+            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/2269196006&color=%23c9a84c&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"
+            title="EP Geometrías Precolombinas en SoundCloud"
+            loading="lazy">
+          </iframe>
+        </div>
+        <div class="stage-video-footer">
+          <div class="stage-video-info">
+            <h4>EP — Geometrías Precolombinas</h4>
+            <p>Diseño sonoro generativo · Producido en Sonic Pi · Jean Carlos Correa</p>
+          </div>
+          <div class="stage-video-actions">
+            <a href="https://soundcloud.com/jean-madara-165898682/sets/geometrias-precolombinas" target="_blank" rel="noopener noreferrer" class="btn-secondary-dossier" style="padding: 10px 20px; font-size: 0.82rem;">
+              <span>↗</span> Escuchar en SoundCloud
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       §6 · ARCHIVO / DOCUMENTOS
+       ============================================================ -->
+  <section class="docs-section" id="archivo">
+    <div class="container">
+      <div class="section-editorial-header">
+        <span class="editorial-tag">Repositorio Abierto</span>
+        <h3 class="editorial-title">Documentación para Programadores y Curadores</h3>
+        <p class="section-intro-text">
+          Todos los expedientes curatoriales, riders técnicos y materiales de prensa
+          están disponibles para gestores culturales, directores de festival y técnicos de sala.
+        </p>
+      </div>
+
+      <div class="docs-grid">
+        <div class="doc-card">
+          <h3>📜 Dossier Artístico Curatorial</h3>
+          <p>Declaración del artista, justificación estética, marco teórico y catalogación
+            detallada de las 75 piezas arqueológicas de referencia.</p>
+          <a href="docs/pdf/Dossier%20Geometr%C3%ADas%20Precolombinas.pdf" target="_blank" class="doc-link">Consultar Dossier (PDF) ↗</a>
+        </div>
+
+        <div class="doc-card">
+          <h3>⚙ Ficha Técnica &amp; Arquitectura</h3>
+          <p>Especificaciones por escena, inventario de las 75 piezas arqueológicas,
+            parámetros de renderizado en tiempo real y requerimientos de sala.</p>
+          <a href="ficha-tecnica.html" target="_blank" class="doc-link">Ver Ficha Técnica Interactiva ↗</a>
+        </div>
+
+        <div class="doc-card">
+          <h3>🏺 Textos Curatoriales de Sala</h3>
+          <p>Cédulas de sala, memoria curatorial, texto para catálogo oficial
+            y statement del artista sobre las culturas ancestrales del litoral.</p>
+          <a href="textos-curatoriales.html" target="_blank" class="doc-link">Leer Textos Curatoriales ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-credits">
+        <strong>🔺 Geometrías Precolombinas</strong>
+        &nbsp;—&nbsp;
+        Laboratorio de Arte Generativo, Nuevos Medios &amp; Escena Contemporánea
+      </div>
+      <p>
+        Creación &amp; Dirección: <strong>Jean Carlos Correa</strong> &amp;
+        <strong>Darla Alarcón</strong>
+        &nbsp;·&nbsp;
+        Investigación arqueológica de referencia: Olaf Holm y Karen Stothert.
+      </p>
+      <div class="keyboard-pill">
+        <span>Atajos de sala:</span>
+        <span><kbd>1</kbd>–<kbd>5</kbd> Cambiar escena</span>
+        <span><kbd>F</kbd> Pantalla completa</span>
+        <span><kbd>R</kbd> Reiniciar</span>
+        <span><kbd>◀</kbd> <kbd>▶</kbd> Anterior / Siguiente</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

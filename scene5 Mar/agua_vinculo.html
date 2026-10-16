@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Agua como Vínculo</title>
+  <!-- CCapture.js para grabación estable fotograma a fotograma -->
+  <script src="https://unpkg.com/ccapture.js@1.1.0/build/CCapture.all.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #020d18;
+      overflow: hidden;
+    }
+
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <script>
+    let W, H;
+
+    // --- Nodos de la red ---
+    let nodos = [];
+    const NUM_NODOS = 22;
+
+    // --- Partículas flotantes ---
+    let particulas = [];
+    const MAX_PART = 120;
+
+    // --- Olas geométricas ---
+    const NUM_OLAS = 7;
+
+    // --- Tiempo global ---
+    let t = 0;
+    const SPEED = 0.0018;
+
+    // ================================================
+    // CLASE NODO
+    // ================================================
+    class Nodo {
+      constructor(x, y) {
+        this.base = createVector(x, y);
+        this.pos = createVector(x, y);
+        this.fase = random(TWO_PI);
+        this.radio = random(2.5, 5.5);
+        this.pulso = 0;
+      }
+
+      update(tt) {
+        // Deriva suave con noise
+        let nx = noise(this.base.x * 0.003, this.base.y * 0.003, tt * 0.4 + this.fase);
+        let ny = noise(this.base.x * 0.003 + 100, this.base.y * 0.003 + 100, tt * 0.4 + this.fase);
+        this.pos.x = this.base.x + map(nx, 0, 1, -18, 18);
+        this.pos.y = this.base.y + map(ny, 0, 1, -12, 12);
+        this.pulso = map(sin(tt * 1.8 + this.fase), -1, 1, 0.4, 1.0);
+      }
+
+      draw() {
+        let alpha = map(this.pulso, 0.4, 1.0, 80, 220);
+        // Halo exterior
+        noFill();
+        stroke(120, 210, 220, alpha * 0.25);
+        strokeWeight(1);
+        ellipse(this.pos.x, this.pos.y, this.radio * 5 * this.pulso);
+        // Punto central
+        fill(160, 230, 240, alpha);
+        noStroke();
+        ellipse(this.pos.x, this.pos.y, this.radio * this.pulso * 1.6);
+      }
+    }
+
+    // ================================================
+    // CLASE PARTÍCULA
+    // ================================================
+    class Particula {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.pos = createVector(random(-W * 0.1, W * 1.1), random(H * 0.1, H * 0.9));
+        this.vel = createVector(random(0.08, 0.4), random(-0.08, 0.08));
+        this.size = random(1, 3.5);
+        this.life = random(0.5, 1.0);
+        this.decay = random(0.0015, 0.004);
+        this.fase = random(TWO_PI);
+        this.tipo = floor(random(3)); // 0: punto, 1: rombo, 2: cruz
+        this.hue = random(185, 215);
+      }
+
+      update(tt) {
+        // Corriente de flujo con noise
+        let angle = noise(this.pos.x * 0.004, this.pos.y * 0.004, tt * 0.3) * TWO_PI * 1.5;
+        let fuerza = p5.Vector.fromAngle(angle).mult(0.06);
+        this.vel.add(fuerza);
+        this.vel.x = constrain(this.vel.x, 0.02, 0.6);
+        this.vel.y = constrain(this.vel.y, -0.3, 0.3);
+        this.pos.add(this.vel);
+        this.life -= this.decay;
+        if (this.pos.x > W * 1.1 || this.life <= 0) this.reset();
+      }
+
+      draw() {
+        let a = this.life * 180;
+        let s = this.size;
+        colorMode(HSB, 360, 100, 100, 255);
+        stroke(this.hue, 55, 88, a);
+        strokeWeight(s * 0.6);
+        fill(this.hue, 40, 95, a * 0.7);
+
+        push();
+        translate(this.pos.x, this.pos.y);
+        if (this.tipo === 0) {
+          noStroke(); fill(this.hue, 45, 95, a);
+          ellipse(0, 0, s * 2, s * 2);
+        } else if (this.tipo === 1) {
+          noFill(); stroke(this.hue, 55, 90, a);
+          strokeWeight(0.7);
+          let r = s * 1.6;
+          beginShape();
+          vertex(0, -r); vertex(r, 0); vertex(0, r); vertex(-r, 0);
+          endShape(CLOSE);
+        } else {
+          stroke(this.hue, 50, 92, a);
+          strokeWeight(0.8);
+          let r = s * 1.4;
+          line(-r, 0, r, 0);
+          line(0, -r * 0.7, 0, r * 0.7);
+        }
+        pop();
+        colorMode(RGB, 255);
+      }
+    }
+
+    // ================================================
+    // FUNCIONES DE OLAS GEOMÉTRICAS
+    // ================================================
+    function dibujarOla(idx, tt) {
+      let yBase = map(idx, 0, NUM_OLAS - 1, H * 0.18, H * 0.82);
+      let amplitud = map(idx, 0, NUM_OLAS - 1, H * 0.055, H * 0.022);
+      let freq = map(idx, 0, NUM_OLAS - 1, 1.8, 3.2);
+      let speed = map(idx, 0, NUM_OLAS - 1, 0.6, 1.8);
+      let fase = idx * 0.7;
+      let alpha = map(idx, 0, NUM_OLAS - 1, 55, 18);
+      let peso = map(idx, 0, NUM_OLAS - 1, 1.2, 0.5);
+
+      // Gradiente de color por profundidad
+      let h = map(idx, 0, NUM_OLAS - 1, 195, 215);
+      let s = map(idx, 0, NUM_OLAS - 1, 70, 40);
+
+      colorMode(HSB, 360, 100, 100, 255);
+      stroke(h, s, 85, alpha);
+      strokeWeight(peso);
+      noFill();
+
+      // Ola geométrica segmentada (no curva continua)
+      let segmentos = 60;
+      let pts = [];
+      for (let i = 0; i <= segmentos; i++) {
+        let x = map(i, 0, segmentos, -W * 0.05, W * 1.05);
+        let nx = noise(x * 0.004 + fase, yBase * 0.003, tt * 0.5 + fase);
+        let ondaNoise = map(nx, 0, 1, -amplitud * 0.5, amplitud * 0.5);
+        let ondaSin = sin(x * freq * 0.007 + tt * speed * TWO_PI + fase) * amplitud;
+        let y = yBase + ondaSin * 0.7 + ondaNoise * 0.5;
+        pts.push(createVector(x, y));
+      }
+
+      // Dibujar como polilínea con pequeños saltos geométricos
+      beginShape();
+      for (let i = 0; i < pts.length; i++) {
+        // Cada ~6 puntos, añadir un quiebre angular sutil
+        if (i % 6 === 0 && i > 0 && i < pts.length - 1) {
+          endShape();
+          beginShape();
+        }
+        vertex(pts[i].x, pts[i].y);
+      }
+      endShape();
+
+      colorMode(RGB, 255);
+    }
+
+    // ================================================
+    // CONEXIONES DE RED
+    // ================================================
+    function dibujarRed(tt) {
+      let distMax = W * 0.19;
+      for (let i = 0; i < nodos.length; i++) {
+        for (let j = i + 1; j < nodos.length; j++) {
+          let d = dist(nodos[i].pos.x, nodos[i].pos.y, nodos[j].pos.x, nodos[j].pos.y);
+          if (d < distMax) {
+            let alpha = map(d, 0, distMax, 70, 0);
+            let pulso = (nodos[i].pulso + nodos[j].pulso) * 0.5;
+            alpha *= pulso;
+
+            // Línea principal
+            colorMode(HSB, 360, 100, 100, 255);
+            stroke(200, 55, 80, alpha);
+            strokeWeight(map(d, 0, distMax, 0.9, 0.2));
+            line(nodos[i].pos.x, nodos[i].pos.y, nodos[j].pos.x, nodos[j].pos.y);
+
+            // Punto medio — nodo secundario
+            if (d < distMax * 0.45) {
+              let mx = (nodos[i].pos.x + nodos[j].pos.x) / 2;
+              let my = (nodos[i].pos.y + nodos[j].pos.y) / 2;
+              fill(200, 40, 95, alpha * 0.6);
+              noStroke();
+              ellipse(mx, my, 2.5);
+            }
+            colorMode(RGB, 255);
+          }
+        }
+      }
+    }
+
+    // ================================================
+    // RUTAS DE TRÁNSITO (líneas diagonales de fondo)
+    // ================================================
+    function dibujarRutas(tt) {
+      let numRutas = 5;
+      colorMode(HSB, 360, 100, 100, 255);
+      for (let r = 0; r < numRutas; r++) {
+        let progBase = ((tt * (0.04 + r * 0.012) + r * 0.19) % 1.0);
+        let yR = map(r, 0, numRutas - 1, H * 0.12, H * 0.88);
+        let x1 = -W * 0.05;
+        let x2 = W * 1.05;
+        let xCursor = lerp(x1, x2, progBase);
+        let len = W * 0.12;
+
+        // Segmento de ruta que viaja
+        let alpha = sin(progBase * PI) * 28;
+        stroke(195, 50, 75, alpha);
+        strokeWeight(0.6);
+        line(max(x1, xCursor - len), yR, min(x2, xCursor), yR);
+      }
+      colorMode(RGB, 255);
+    }
+
+    // ================================================
+    // TEXTO TIPOGRÁFICO
+    // ================================================
+    function dibujarTexto(tt) {
+      let pulso = map(sin(tt * 0.9), -1, 1, 0.5, 1.0);
+      fill(200, 220, 230, 30 * pulso);
+      noStroke();
+      textSize(9);
+      textStyle(NORMAL);
+      let palabras = ["vínculo", "tránsito", "origen", "corriente", "red", "nodo", "flujo", "territorio"];
+      for (let i = 0; i < palabras.length; i++) {
+        let px = (W * 0.08 + i * W * 0.12 + sin(tt * 0.5 + i) * 12) % W;
+        let py = H * 0.04 + (i % 2) * H * 0.93;
+        fill(200, 215, 225, map(sin(tt * 1.2 + i * 0.8), -1, 1, 12, 45));
+        text(palabras[i], px, py);
+      }
+    }
+
+    // ================================================
+    // SETUP
+    // ================================================
+    // Motor de captura CCapture.js
+    let capturer = new CCapture({ format: 'webm', framerate: 30 });
+    let p5Canvas;
+
+    function setup() {
+      W = 1280;
+      H = 720;
+      p5Canvas = createCanvas(W, H);
+      frameRate(30);
+      pixelDensity(1);
+      colorMode(RGB, 255);
+      textFont('monospace');
+
+      // Crear nodos distribuidos en grilla irregular
+      for (let i = 0; i < NUM_NODOS; i++) {
+        let x = random(W * 0.05, W * 0.95);
+        let y = random(H * 0.08, H * 0.92);
+        nodos.push(new Nodo(x, y));
+      }
+
+      // Crear partículas
+      for (let i = 0; i < MAX_PART; i++) {
+        particulas.push(new Particula());
+        particulas[i].pos.x = random(-W * 0.1, W * 1.1); // distribuir al inicio
+        particulas[i].life = random(0.1, 1.0);
+      }
+    }
+
+    // ================================================
+    // DRAW
+    // ================================================
+    function draw() {
+      // Fondo con trail
+
+      background(2, 13, 24, 22);
+
+      t += SPEED;
+
+      // 1. Rutas de tránsito (fondo, muy sutil)
+      dibujarRutas(t);
+
+      // 2. Olas geométricas
+      for (let i = 0; i < NUM_OLAS; i++) {
+        dibujarOla(i, t);
+      }
+
+      // 3. Red de nodos
+      // Actualizar nodos
+      for (let n of nodos) n.update(t);
+      // Conexiones
+      dibujarRed(t);
+      // Nodos
+      for (let n of nodos) n.draw();
+
+      // 4. Partículas
+      for (let p of particulas) {
+        p.update(t);
+        p.draw();
+      }
+
+      // 5. Texto
+      dibujarTexto(t);
+      // INICIO DE GRABACIÓN AUTOMÁTICO
+      if (frameCount === 1) capturer.start();
+      // CAPTURA Y GESTIÓN DE TIEMPO
+      capturer.capture(p5Canvas.canvas);
+      if (frameCount === 5610) {
+        noLoop();
+        capturer.stop();
+        capturer.save();
+
+      }
+    }
+
+
+    // ================================================
+    function windowResized() {
+      W = windowWidth;
+      H = windowHeight;
+      resizeCanvas(W, H);
+    }
+  </script>
+</body>
+
+</html>

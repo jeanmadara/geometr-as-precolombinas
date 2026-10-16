@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Textos Curatoriales de Sala — Geometrías Precolombinas</title>
+  <meta name="description"
+    content="Textos curatoriales de sala, cédulas de exhibición, statement del artista y memoria teórica de Geometrías Precolombinas. Creación: Jean Carlos Correa & Darla Alarcón.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&amp;family=Cinzel+Decorative:wght@700&amp;family=JetBrains+Mono:wght@300;400;600&amp;family=Outfit:wght@300;400;500;600;700&amp;display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .curatorial-page-hero {
+      padding: 130px 0 50px 0;
+      position: relative;
+    }
+    .curatorial-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 36px 40px;
+      margin-bottom: 32px;
+      backdrop-filter: blur(12px);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .curatorial-card:hover {
+      border-color: var(--border-glow);
+      box-shadow: var(--shadow-gold);
+    }
+    .curatorial-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 16px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .curatorial-card-header h3 {
+      font-family: var(--font-display);
+      color: var(--gold-light);
+      font-size: 1.4rem;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .curatorial-scene-tag {
+      font-family: var(--font-code);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold-primary);
+      background: rgba(229, 185, 90, 0.12);
+      border: 1px solid var(--border-subtle);
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+    .curatorial-prose {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: var(--text-main);
+      max-width: 820px;
+    }
+    .curatorial-prose p {
+      margin-bottom: 18px;
+    }
+    .curatorial-prose p:last-child {
+      margin-bottom: 0;
+    }
+    .curatorial-prose strong {
+      color: var(--gold-light);
+      font-weight: 600;
+    }
+    .curatorial-prose em {
+      color: var(--gold-primary);
+      font-style: italic;
+    }
+    .quote-callout {
+      border-left: 3px solid var(--gold-primary);
+      padding: 16px 24px;
+      margin: 24px 0;
+      background: rgba(229, 185, 90, 0.05);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: var(--gold-light);
+      line-height: 1.6;
+    }
+    .back-btn-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      background: rgba(229, 185, 90, 0.08);
+      border: 1px solid var(--border-subtle);
+      border-radius: 999px;
+      color: var(--gold-light);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all 0.25s ease;
+    }
+    .back-btn-pill:hover {
+      background: rgba(229, 185, 90, 0.2);
+      border-color: var(--gold-primary);
+      transform: translateX(-3px);
+    }
+    .quick-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+    .quick-nav-link {
+      font-family: var(--font-code);
+      font-size: 0.78rem;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .quick-nav-link:hover {
+      background: rgba(229, 185, 90, 0.15);
+      border-color: var(--gold-primary);
+      color: var(--gold-light);
+    }
+    @media (max-width: 768px) {
+      .curatorial-card {
+        padding: 24px 20px;
+      }
+    }
+    @media print {
+      .site-header, .site-footer, .back-btn-pill, .print-btn, .quick-nav {
+        display: none !important;
+      }
+      body {
+        background: #fff !important;
+        color: #000 !important;
+      }
+      .curatorial-card {
+        border: 1px solid #ccc !important;
+        background: #fff !important;
+        color: #000 !important;
+        page-break-inside: avoid;
+      }
+      .curatorial-prose, p, strong, em, h3 {
+        color: #000 !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       HEADER / NAVEGACIÓN FIJA
+       ============================================================ -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-wrap">
+        <div class="brand-glyph">🔺</div>
+        <div class="brand-text">
+          <h1>Geometrías Precolombinas</h1>
+          <p>Textos Curatoriales de Sala</p>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <a href="index.html#archivo" class="back-btn-pill">
+          <span>←</span> Volver al Dossier
+        </a>
+        <button onclick="window.print()" class="btn-pill print-btn" title="Imprimir cédulas de sala">
+          <span>🖨</span> Imprimir / PDF
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       HERO EDITORIAL
+       ============================================================ -->
+  <section class="curatorial-page-hero">
+    <div class="container">
+      <div class="hero-curatorial-pill">
+        <span class="pulse-dot"></span>
+        <span>Cédulas Museísticas · Memoria Curatorial · Catálogo</span>
+      </div>
+
+      <h2 class="hero-dossier-title" style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 16px;">
+        Textos Curatoriales de Sala
+      </h2>
+      <p class="section-intro-text" style="max-width: 820px; margin-bottom: 28px;">
+        Declaraciones teóricas, textos de presentación para sala de exhibición, memoria por escena y statement artístico para programas de sala, catálogos oficiales y festivales de nuevos medios.
+      </p>
+
+      <!-- Navegación rápida interna -->
+      <nav class="quick-nav" aria-label="Secciones de textos">
+        <a href="#texto-general" class="quick-nav-link">Texto General de Sala</a>
+        <a href="#escena-1" class="quick-nav-link">1. Latido de la Forma</a>
+        <a href="#escena-2" class="quick-nav-link">2. Archivo de Mujeres</a>
+        <a href="#escena-3a" class="quick-nav-link">3a. América Orrala</a>
+        <a href="#escena-3b" class="quick-nav-link">3b. Vasijas Funerarias</a>
+        <a href="#escena-4" class="quick-nav-link">4. Cosmovisión</a>
+        <a href="#escena-5" class="quick-nav-link">5. El Agua como Vínculo</a>
+        <a href="#catalogo" class="quick-nav-link">Texto para Catálogo</a>
+        <a href="#statement" class="quick-nav-link">Statement del Artista</a>
+      </nav>
+
+      <!-- TEXTO GENERAL DE SALA -->
+      <article class="curatorial-card" id="texto-general" style="border-color: var(--border-glow);">
+        <div class="curatorial-card-header">
+          <h3><span>🏛</span> Texto General de Sala</h3>
+          <span class="curatorial-scene-tag">CÉDULA PRINCIPAL</span>
+        </div>
+        <div class="curatorial-prose">
+          <p style="font-family: var(--font-display); font-size: 1.25rem; color: var(--gold-light); margin-bottom: 16px;">
+            GEOMETRÍAS PRECOLOMBINAS<br>
+            <span style="font-family: var(--font-body); font-size: 0.95rem; color: var(--text-muted);">Laboratorio Escénico de Arte Generativo · Jean Carlos Correa (@jeanmadara)</span>
+          </p>
+
+          <p>
+            Cinco mil años separan a las Venus de Valdivia de esta pantalla. Sin embargo, la distancia es una ilusión: las mismas espirales que un alfarero trazó con los dedos en el barro húmedo del litoral ecuatoriano circulan ahora como funciones sinusoidales dentro de un navegador web. El gesto no ha cambiado. Solo ha cambiado el material.
+          </p>
+
+          <div class="quote-callout">
+            «El código no ilustra el objeto arqueológico: lo ejecuta. La espiral se convierte en función sinusoidal, el pigmento mineral en gradiente HSB y la ofrenda funeraria en crossfade cinematográfico.»
+          </div>
+
+          <p>
+            <strong>Geometrías Precolombinas</strong> es un laboratorio escénico que traduce artefactos arqueológicos de la costa ecuatoriana en organismos digitales con comportamiento autónomo. Aquí, un jaguar Tolita no se exhibe: respira. Una vasija funeraria Milagro-Quevedo no se archiva: aparece y se disuelve en la oscuridad como lo hacen los recuerdos. Un retrato no se captura: emerge línea a línea, construido por cien agentes algorítmicos que recorren la imagen sin saber que están dibujando un rostro.
+          </p>
+          <p>
+            El proyecto trabaja con <strong>75 piezas de nueve culturas precolombinas</strong> —Valdivia, Machalilla, Chorrera, Bahía, Tolita, Guangala, Jama-Coaque, Manteño y Milagro-Quevedo— que habitaron el mismo litoral a lo largo de tres períodos históricos. Lo que las une no es solo la geografía: es el Pacífico, el agua como vínculo, la corriente como red.
+          </p>
+          <p>
+            Cada escena es un <strong>agente visual</strong>: un programa que se ejecuta en tiempo real, generando variaciones únicas e irrepetibles en cada ejecución. No hay dos funciones idénticas. No hay dos latidos iguales. Como los artefactos originales, cada iteración es una pieza única moldeada por las condiciones de su momento.
+          </p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CÉDULAS POR ESCENA
+       ============================================================ -->
+  <section class="dramaturgy-section" style="padding-top: 0;">
+    <div class="container">
+      <div class="section-editorial-header">
+        <span class="editorial-tag">Memoria por Acto</span>
+        <h3 class="editorial-title">Cédulas de Sala por Escena</h3>
+      </div>
+
+      <!-- Escena 1 -->
+      <article class="curatorial-card" id="escena-1">
+        <div class="curatorial-card-header">
+          <h3><span>🐆</span> Escena 1 · El Latido de la Forma</h3>
+          <span class="curatorial-scene-tag">Geometric Heartbeat · Tolita</span>
+        </div>
+        <div class="curatorial-prose">
+          <p>
+            Un jaguar zoomorfo de la cultura Tolita gira en el vacío. No tiene superficie, no tiene peso, no tiene color sólido: es pura estructura —un andamiaje de líneas que pulsa entre dorado y blanco como si la energía vital que el artesano original insufló en el barro todavía circulara por sus vértices.
+          </p>
+          <p>
+            La respiración del wireframe es controlada por una onda sinusoidal que oscila entre 1.0 y 1.08 de escala —un movimiento tan sutil que el ojo lo percibe como presencia, no como animación. La rotación comienza lenta, ceremonial, solo en un eje. Después de un minuto, despierta un segundo eje. Después de dos, el tercero. El objeto se libera progresivamente de las restricciones del espacio museístico y entra en un movimiento cósmico, libre, sin vitrina.
+          </p>
+          <p>
+            <em>Este no es un modelo 3D. Es un ritual de reactivación.</em>
+          </p>
+        </div>
+      </article>
+
+      <!-- Escena 2 -->
+      <article class="curatorial-card" id="escena-2">
+        <div class="curatorial-card-header">
+          <h3><span>♀</span> Escena 2 · Presencia</h3>
+          <span class="curatorial-scene-tag">Archivo de Mujeres · 47 Figuras</span>
+        </div>
+        <div class="curatorial-prose">
+          <p>
+            Cuarenta y siete figuras femeninas de cerámica ocupan, una a una, la totalidad de la pantalla. Cada una permanece cuatro segundos —tiempo suficiente para que el ojo la recorra, insuficiente para que la memoria la agote. El zoom lento que las acerca simula la inclinación del cuerpo hacia la vitrina: ese gesto íntimo de quien se inclina a mirar de cerca algo que le importa.
+          </p>
+          <p>
+            El recorrido es cronológico: desde las Venus de Valdivia, las figurinas más antiguas de América (3500 a.C.), hasta las figuras Manteño del período de Integración (1500 d.C.). Cinco mil años de representación femenina atraviesan la pantalla sin narración, sin rótulo, sin explicación. Solo presencia.
+          </p>
+          <p>
+            El crossfade entre imágenes no es un efecto técnico: es una declaración. Cada figura se disuelve en la siguiente como las generaciones se disuelven unas en otras. Lo que permanece no es la pieza individual sino el gesto colectivo de representar.
+          </p>
+        </div>
+      </article>
+
+      <!-- Escena 3a -->
+      <article class="curatorial-card" id="escena-3a">
+        <div class="curatorial-card-header">
+          <h3><span>🕸</span> Escena 3a · Emergencia</h3>
+          <span class="curatorial-scene-tag">América Orrala · 100 Agentes</span>
+        </div>
+        <div class="curatorial-prose">
+          <p>
+            Un retrato que no existe al inicio. Una pantalla negra. Y cien agentes autónomos que comienzan a moverse.
+          </p>
+          <p>
+            Cada agente es un punto que traza líneas mientras recorre el canvas. No tiene instrucciones sobre qué dibujar: solo sabe muestrear el brillo de una fotografía invisible y cambiar de dirección cuando detecta luz. El color de cada línea se extrae del pixel que el agente está pisando en ese momento. El resultado es un retrato que se construye desde el ruido, desde el movimiento aleatorio, desde la acumulación de pequeños gestos que no saben que están construyendo un rostro.
+          </p>
+          <p>
+            <strong>América Orrala</strong> —maestra alfarera y agricultora, Portadora de Saberes Tradicionales de la Comuna Valdivia— aparece lentamente en la pantalla como aparecen los recuerdos: no de golpe, sino por capas, por fragmentos, por insistencia.
+          </p>
+        </div>
+      </article>
+
+      <!-- Escena 3b -->
+      <article class="curatorial-card" id="escena-3b">
+        <div class="curatorial-card-header">
+          <h3><span>🏺</span> Escena 3b · Tránsito</h3>
+          <span class="curatorial-scene-tag">Vasijas Funerarias · 20 Urnas</span>
+        </div>
+        <div class="curatorial-prose">
+          <p>
+            Veinte vasijas funerarias flotan sobre fondo negro. Son contenedores de tránsito: objetos diseñados para acompañar al cuerpo en su paso de un mundo a otro. Urnas que contenían huesos, ofrendas, alimento para el viaje.
+          </p>
+          <p>
+            En esta escena, las vasijas mismas transitan. Aparecen desde la oscuridad con un fade suave, permanecen el tiempo necesario para ser reconocidas, y se disuelven hacia la siguiente. El efecto Ken Burns las acerca lentamente, como si el espectador caminara hacia ellas en un museo silencioso.
+          </p>
+          <p>
+            Cuatro culturas conviven: Jama-Coaque, Manteño, Milagro-Quevedo y Tolita. Separadas por siglos, unidas por la misma función: acompañar al muerto. Aquí, en la pantalla, cumplen una función análoga: acompañan al espectador en un tránsito contemplativo.
+          </p>
+        </div>
+      </article>
+
+      <!-- Escena 4 -->
+      <article class="curatorial-card" id="escena-4">
+        <div class="curatorial-card-header">
+          <h3><span>◬</span> Escena 4 · Lo que Aparece y Desaparece</h3>
+          <span class="curatorial-scene-tag">Cosmovisión · Abstracción Cinética</span>
+        </div>
+        <div class="curatorial-prose">
+          <p>
+            Sobre un fondo de grano fotográfico —una textura generada pixel a pixel que evoca la materialidad analógica del celuloide— aparecen formas geométricas elementales. Rectángulos. Círculos. Líneas. Nada más.
+          </p>
+          <p>
+            Cada forma tiene un ciclo de vida propio: nace con un fade suave, existe durante unos segundos rotando lentamente sobre su eje, y muere desvaneciéndose con la misma suavidad. Algunas contienen formas hijas en su interior —un eco geométrico que evoca las figuras dentro de figuras de la iconografía precolombina, donde un ser siempre contiene a otro ser.
+          </p>
+          <p>
+            Las líneas se dibujan progresivamente, como si una mano invisible las trazara sobre la oscuridad. No hay prisa. No hay destino. Solo el acto de aparecer, existir brevemente, y ceder el espacio a la siguiente forma. Es una cosmovisión reducida a su esencia: el ciclo de lo que nace, vive y se transforma.
+          </p>
+        </div>
+      </article>
+
+      <!-- Escena 5 -->
+      <article class="curatorial-card" id="escena-5">
+        <div class="curatorial-card-header">
+          <h3><span>🌊</span> Escena 5 · Corriente</h3>
+          <span class="curatorial-scene-tag">El Agua como Vínculo · Océano Pacífico</span>
+        </div>
+        <div class="curatorial-prose">
+          <p>
+            El Pacífico no es un borde: es un centro. Para las culturas del litoral ecuatoriano, el océano fue ruta de comercio, fuente de alimento, eje cosmogónico y frontera con el mundo de los muertos. El agua no separaba: vinculaba.
+          </p>
+          <p>
+            Esta escena traduce esa idea en un sistema visual de cinco capas. Olas geométricas —no curvas suaves sino polilíneas con quiebres angulares— ondean en gradientes de azul oceánico. Una red de veintidós nodos luminosos se conecta y desconecta constantemente, formando constelaciones efímeras como las rutas de navegación que unían las comunidades costeras.
+          </p>
+          <p>
+            Ciento veinte partículas —puntos, rombos y cruces— derivan por corrientes de flujo Perlin como organismos marinos o estrellas submarinas. Y en los bordes, palabras casi invisibles flotan con opacidad pulsante: <em>vínculo, tránsito, origen, corriente, red, nodo, flujo, territorio</em>. Todo se mueve. Todo deja estela. La persistencia visual convierte cada movimiento en memoria.
+          </p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TEXTO PARA CATÁLOGO & STATEMENT
+       ============================================================ -->
+  <section class="pillars-section" style="padding-top: 0;">
+    <div class="container">
+      <div class="section-editorial-header">
+        <span class="editorial-tag">Publicaciones &amp; Prensa</span>
+        <h3 class="editorial-title">Formatos Editoriales</h3>
+      </div>
+
+      <!-- Texto Breve Catálogo -->
+      <article class="curatorial-card" id="catalogo">
+        <div class="curatorial-card-header">
+          <h3><span>📜</span> Texto Breve para Catálogo (200 palabras)</h3>
+          <span class="curatorial-scene-tag">PUBLICACIÓN OFICIAL</span>
+        </div>
+        <div class="curatorial-prose">
+          <p>
+            Laboratorio escénico digital que traduce artefactos arqueológicos del litoral ecuatoriano en piezas de arte generativo. El proyecto opera con 75 piezas de nueve culturas precolombinas —desde las Venus de Valdivia (3500 a.C.) hasta las urnas Milagro-Quevedo (1500 d.C.)— transformándolas en organismos digitales con comportamiento autónomo mediante p5.js.
+          </p>
+          <p>
+            Cinco escenas componen el laboratorio: un jaguar Tolita que respira como wireframe pulsante; un archivo de 47 figuras femeninas en slideshow cinematográfico; un retrato construido línea a línea por agentes algorítmicos; un archivo de vasijas funerarias en tránsito contemplativo; y una composición oceánica multicapa que traduce el Pacífico como vínculo entre culturas.
+          </p>
+          <p>
+            Cada escena funciona como un agente visual autónomo: un programa que se ejecuta en tiempo real generando variaciones únicas e irrepetibles. El código no ilustra el objeto arqueológico; lo ejecuta. La espiral se convierte en función sinusoidal, el pigmento mineral en gradiente HSB, la ofrenda funeraria en crossfade cinematográfico. El resultado es un archivo expandido donde el patrimonio no se conserva en la inmovilidad del museo sino en la actividad continua del algoritmo.
+          </p>
+        </div>
+      </article>
+
+      <!-- Statement del Artista -->
+      <article class="curatorial-card" id="statement">
+        <div class="curatorial-card-header">
+          <h3><span>✍</span> Statement del Artista</h3>
+          <span class="curatorial-scene-tag">JEAN CARLOS CORREA</span>
+        </div>
+        <div class="curatorial-prose">
+          <p>
+            Trabajo en la intersección entre la memoria material precolombina y el código creativo. Me interesa la traducción: ¿qué ocurre cuando un artefacto de 3000 años se somete a las reglas de un lenguaje de programación? ¿Qué se pierde? ¿Qué se revela?
+          </p>
+          <p>
+            <strong>Geometrías Precolombinas</strong> nació de la observación de las colecciones del litoral ecuatoriano. Cada vasija, cada figurín, cada máscara contiene instrucciones formales —proporciones, ritmos, simetrías— que pueden leerse como código fuente de una estética ancestral. Mi trabajo consiste en ejecutar ese código con herramientas contemporáneas.
+          </p>
+          <p>
+            No digitalizo objetos. Los reactivo. Un jaguar Tolita no se convierte en un modelo 3D estático: se convierte en un wireframe que respira. Una vasija funeraria no se fotografía: aparece y se disuelve en la pantalla como lo hacen los recuerdos.
+          </p>
+          <div class="quote-callout" style="margin-top: 18px;">
+            «El resultado no es preservación. Es continuación.»
+          </div>
+        </div>
+      </article>
+
+      <!-- Redes -->
+      <article class="curatorial-card">
+        <div class="curatorial-card-header">
+          <h3><span>📡</span> Síntesis para Prensa y Difusión</h3>
+          <span class="curatorial-scene-tag">REDES &amp; MEDIOS</span>
+        </div>
+        <div class="curatorial-prose">
+          <p style="font-size: 1.15rem; color: var(--gold-light); font-family: var(--font-display);">
+            Nueve culturas. Cinco mil años. Setenta y cinco piezas arqueológicas. Un navegador web.
+          </p>
+          <p>
+            <strong>Geometrías Precolombinas</strong> traduce artefactos del litoral ecuatoriano en organismos digitales que respiran, pulsan y se transforman en tiempo real. El barro es código. La espiral es algoritmo. El silencio arqueológico es un latido que espera ser ejecutado.
+          </p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-credits">
+        <strong>🔺 Geometrías Precolombinas</strong> — Textos Curatoriales Oficiales
+      </div>
+      <p>
+        Creación: <strong>Jean Carlos Correa</strong> &amp; <strong>Darla Alarcón</strong> · 2026
+      </p>
+      <div style="margin-top: 20px;">
+        <a href="index.html" class="back-btn-pill">
+          <span>←</span> Regresar a la Portada del Dossier
+        </a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>

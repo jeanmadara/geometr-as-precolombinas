@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>GP-DEMO2025 // Agente 3a: América Orrala</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <script src="https://unpkg.com/ccapture.js@1.1.0/build/CCapture.all.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      overflow: hidden;
+    }
+
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+    const WIDTH = 1080;
+    const HEIGHT = 1920;
+    const FPS = 25;
+    const TOTAL_FRAMES = 250;
+
+    let circles = [];
+    let total = 300; // Aumentado para mayor densidad en poco tiempo
+    let img;
+    let capturer;
+    let p5Canvas;
+
+    function preload() {
+      img = loadImage('../scene3-1 AmericaOrrala/orrala.png');
+    }
+
+    function setup() {
+      p5Canvas = createCanvas(WIDTH, HEIGHT);
+      frameRate(FPS);
+      background(0);
+
+      // --- ADAPTAR IMAGEN AL CANVAS (CROP TO COVER) ---
+      let scaleRatio = max(WIDTH / img.width, HEIGHT / img.height);
+      img.resize(floor(img.width * scaleRatio), floor(img.height * scaleRatio));
+      let startX = floor((img.width - WIDTH) / 2);
+      let startY = floor((img.height - HEIGHT) / 2);
+      img = img.get(startX, startY, WIDTH, HEIGHT);
+      img.loadPixels();
+
+      // --- INICIALIZAR AGENTES ---
+      for (let i = 0; i < total; i++) {
+        circles[i] = {
+          prevPos: { x: WIDTH / 2, y: HEIGHT / 2 },
+          pos: { x: WIDTH / 2, y: HEIGHT / 2 },
+          dir: random() > 0.5 ? 1 : -1,
+          radius: random(3, 10),
+          angle: random(TWO_PI)
+        };
+      }
+
+      capturer = new CCapture({ format: 'webm', framerate: FPS });
+    }
+
+    function draw() {
+      if (frameCount === 1) capturer.start();
+
+      // Aceleramos el dibujo con un bucle interno para compensar los 10 segundos
+      // Originalmente el sketch corría por miles de frames. 
+      // Hacemos 15 iteraciones por frame. 250 frames * 15 = 3750 actualizaciones.
+      for (let iter = 0; iter < 15; iter++) {
+        for (let i = 0; i < total; i++) {
+          let circle = circles[i];
+          circle.angle += (1 / circle.radius) * circle.dir;
+
+          circle.pos.x += cos(circle.angle) * circle.radius;
+          circle.pos.y += sin(circle.angle) * circle.radius;
+
+          let cx = round(circle.pos.x);
+          let cy = round(circle.pos.y);
+
+          let outOfBounds = cx < 0 || cx >= WIDTH || cy < 0 || cy >= HEIGHT;
+          let tooBright = false;
+
+          // Obtener brillo de la imagen
+          let col = [0, 0, 0, 255];
+          if (!outOfBounds) {
+            let index = (cx + cy * WIDTH) * 4;
+            let r = img.pixels[index];
+            let g = img.pixels[index + 1];
+            let b = img.pixels[index + 2];
+            col = [r, g, b, 255];
+            // Calculo rápido de brillo (aproximado)
+            let bght = (r * 0.299 + g * 0.587 + b * 0.114);
+            if (bght > 70) tooBright = true;
+          }
+
+          if (tooBright || outOfBounds) {
+            circle.dir *= -1;
+            circle.radius = random(3, 10);
+            circle.angle += PI;
+          }
+
+          stroke(col[0], col[1], col[2], 255);
+          line(circle.prevPos.x, circle.prevPos.y, circle.pos.x, circle.pos.y);
+
+          circle.prevPos.x = circle.pos.x;
+          circle.prevPos.y = circle.pos.y;
+        }
+      }
+
+      capturer.capture(p5Canvas.canvas);
+
+      if (frameCount >= TOTAL_FRAMES) {
+        noLoop();
+        capturer.stop();
+        capturer.save();
+      }
+    }
+  </script>
+</body>
+
+</html>

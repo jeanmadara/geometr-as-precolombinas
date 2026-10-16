@@ -1,0 +1,199 @@
+<canvas id="c"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+
+<!-- CCapture.js -->
+<script src="https://unpkg.com/ccapture.js@1.1.0/build/CCapture.all.min.js"></script>
+
+<script>
+  new p5(function (p) {
+    let W, H, shapes = [], noiseOff = 0, pg;
+
+    // 🎥 CAPTURA
+    let capturer = new CCapture({
+      format: 'webm',
+      framerate: 30,
+    });
+
+    let capturing = true; // 🔥 puedes apagarlo fácil
+
+    function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+    function easeInOut(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+
+    class Shape {
+      constructor() { this.reset(true); }
+      reset(immediate) {
+        let margin = 40;
+        this.x = p.random(margin, W - margin);
+        this.y = p.random(margin, H - margin);
+        this.type = p.random() < 0.5 ? 'rect' : 'circle';
+        this.size = p.random(12, 80);
+        this.born = p.frameCount + (immediate ? p.floor(p.random(0, 180)) : 0);
+        this.lifespan = p.random(200, 500);
+        this.alpha = 0;
+        this.targetAlpha = p.random(30, 120);
+        this.rotation = p.random(p.TWO_PI);
+        this.rotSpeed = p.random(-0.004, 0.004);
+        this.hasChild = p.random() < 0.35;
+        this.childOffset = p.random(0.3, 0.7);
+      }
+
+      update() {
+        let age = p.frameCount - this.born;
+        if (age < 0) return;
+        let t = p.constrain(age / this.lifespan, 0, 1);
+        let fadeIn = p.constrain(age / 80, 0, 1);
+        let fadeOut = p.constrain((this.lifespan - age) / 60, 0, 1);
+        this.alpha = easeOut(fadeIn) * easeInOut(fadeOut) * this.targetAlpha;
+        this.rotation += this.rotSpeed;
+        if (age > this.lifespan) this.reset(false);
+      }
+
+      draw() {
+        if (p.frameCount < this.born) return;
+        let age = p.frameCount - this.born;
+        let prog = p.constrain(age / 80, 0, 1);
+        let easedProg = easeOut(prog);
+
+        p.push();
+        p.translate(this.x, this.y);
+        p.rotate(this.rotation);
+        p.stroke(255, this.alpha);
+        p.strokeWeight(0.5);
+        p.noFill();
+
+        if (this.type === 'rect') {
+          let s = this.size * easedProg;
+          p.rect(-s / 2, -s / 2, s, s);
+          if (this.hasChild) {
+            let s2 = s * this.childOffset;
+            p.stroke(255, this.alpha * 0.5);
+            p.rect(-s2 / 2, -s2 / 2, s2, s2);
+          }
+        } else {
+          let r = (this.size / 2) * easedProg;
+          p.ellipse(0, 0, r * 2, r * 2);
+          if (this.hasChild) {
+            p.stroke(255, this.alpha * 0.5);
+            p.ellipse(0, 0, r * this.childOffset * 2, r * this.childOffset * 2);
+          }
+        }
+        p.pop();
+      }
+    }
+
+    class Line {
+      constructor() { this.reset(true); }
+
+      reset(immediate) {
+        let a = p.random(p.TWO_PI);
+        let cx = p.random(60, W - 60), cy = p.random(60, H - 60);
+        let len = p.random(30, 200);
+        this.x1 = cx + p.cos(a) * len / 2;
+        this.y1 = cy + p.sin(a) * len / 2;
+        this.x2 = cx - p.cos(a) * len / 2;
+        this.y2 = cy - p.sin(a) * len / 2;
+        this.born = p.frameCount + (immediate ? p.floor(p.random(0, 180)) : 0);
+        this.lifespan = p.random(180, 420);
+        this.alpha = 0;
+        this.targetAlpha = p.random(25, 90);
+      }
+
+      update() {
+        let age = p.frameCount - this.born;
+        if (age < 0) return;
+        let fadeIn = p.constrain(age / 60, 0, 1);
+        let fadeOut = p.constrain((this.lifespan - age) / 50, 0, 1);
+        this.alpha = easeOut(fadeIn) * fadeOut * this.targetAlpha;
+        if (age > this.lifespan) this.reset(false);
+      }
+
+      draw() {
+        if (p.frameCount < this.born) return;
+        let age = p.frameCount - this.born;
+        let prog = p.constrain(age / 60, 0, 1);
+        let ep = easeOut(prog);
+        let mx = p.lerp(this.x1, this.x2, ep);
+        let my = p.lerp(this.y1, this.y2, ep);
+        p.stroke(255, this.alpha);
+        p.strokeWeight(0.4);
+        p.line(this.x1, this.y1, mx, my);
+      }
+    }
+
+    p.setup = function () {
+      let cnv = p.createCanvas(1280, 720); // 🔥 fijo para captura estable
+      cnv.parent(document.body);
+      cnv.elt.id = 'c';
+
+      W = p.width; H = p.height;
+      p.frameRate(30);
+      p.pixelDensity(1);
+
+      pg = p.createGraphics(W, H);
+      buildTexture();
+
+      for (let i = 0; i < 28; i++) shapes.push(new Shape());
+      for (let i = 0; i < 20; i++) shapes.push(new Line());
+    };
+
+    function buildTexture() {
+      pg.loadPixels();
+      for (let i = 0; i < pg.pixels.length; i += 4) {
+        let n = Math.random();
+        let v = n < 0.012 ? p.floor(p.random(18, 45)) :
+          n < 0.04 ? p.floor(p.random(8, 22)) :
+            p.floor(p.random(0, 9));
+        pg.pixels[i] = v;
+        pg.pixels[i + 1] = v;
+        pg.pixels[i + 2] = v;
+        pg.pixels[i + 3] = 255;
+      }
+      pg.updatePixels();
+    }
+
+    p.draw = function () {
+      if (capturing && p.frameCount === 1) capturer.start(); // ✅ iniciar
+
+      p.background(0);
+      p.image(pg, 0, 0);
+
+      noiseOff += 0.003;
+      for (let i = 0; i < shapes.length; i++) {
+        shapes[i].update();
+        shapes[i].draw();
+      }
+
+      // 🎥 capturar frame
+      if (capturing) capturer.capture(p.canvas);
+
+      // ⏹ detener
+      if (capturing && p.frameCount === 5400) {
+        p.noLoop();
+        capturer.stop();
+        capturer.save();
+      }
+    };
+
+    p.windowResized = function () {
+      W = p.windowWidth;
+      H = Math.min(p.windowHeight, 520);
+      p.resizeCanvas(W, H);
+      pg = p.createGraphics(W, H);
+      buildTexture();
+    };
+
+  }, document.body);
+</script>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    overflow: hidden;
+  }
+
+  canvas {
+    display: block;
+  }
+</style>

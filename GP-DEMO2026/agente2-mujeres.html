@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>GP-DEMO2025 // Agente 2: Mujeres</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <script src="https://unpkg.com/ccapture.js@1.1.0/build/CCapture.all.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      overflow: hidden;
+    }
+
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+    const WIDTH = 1080;
+    const HEIGHT = 1920;
+    const FPS = 25;
+    const TOTAL_FRAMES = 250;
+
+    const imagePaths = [
+      "../scene2 Mujeres/Img/Formativo/Valdivia/1 _MG_8305.png",
+      "../scene2 Mujeres/Img/Formativo/Valdivia/GA-17-2558-83.png",
+      "../scene2 Mujeres/Img/Formativo/Valdivia/GA-2-2373-82.png",
+      "../scene2 Mujeres/Img/Formativo/Machalilla/0G7A9999.png",
+      "../scene2 Mujeres/Img/Formativo/Chorrera/GA-1-1978-81 Chorrera.png",
+      "../scene2 Mujeres/Img/DesarrolloRegional/Bahia/IMG_20250718_120421_308.png"
+    ];
+
+    const slideDuration = 2000; // 2 segundos
+    const fadeDuration = 500;   // 0.5 segundos
+
+    let images = [];
+    let capturer;
+    let p5Canvas;
+    let totalMs = 0;
+
+    function preload() {
+      for (let path of imagePaths) {
+        images.push(loadImage(path));
+      }
+    }
+
+    function setup() {
+      p5Canvas = createCanvas(WIDTH, HEIGHT);
+      frameRate(FPS);
+      imageMode(CENTER);
+      capturer = new CCapture({ format: 'webm', framerate: FPS });
+    }
+
+    function draw() {
+      if (frameCount === 1) capturer.start();
+
+      background(0);
+
+      // --- CÁLCULOS DE TIEMPO ---
+      totalMs = (frameCount - 1) * (1000 / FPS);
+      let currentSlideMs = totalMs % slideDuration;
+      let index = floor(totalMs / slideDuration) % images.length;
+      let progreso = currentSlideMs / slideDuration;
+
+      // LÓGICA DE FADE
+      let opacidad = 255;
+      if (currentSlideMs < fadeDuration) {
+        opacidad = map(currentSlideMs, 0, fadeDuration, 0, 255);
+      }
+
+      // 1. DIBUJAR IMAGEN PREVIA (Crossfade)
+      if (currentSlideMs < fadeDuration && totalMs >= slideDuration) {
+        let prevIndex = (index - 1 + images.length) % images.length;
+        push();
+        tint(255, 255 - opacidad);
+        dibujarPieza(prevIndex, 1.0);
+        pop();
+      }
+
+      // 2. DIBUJAR IMAGEN ACTUAL
+      push();
+      tint(255, opacidad);
+      dibujarPieza(index, progreso);
+      pop();
+
+      // --- CAPTURA ---
+      capturer.capture(p5Canvas.canvas);
+      if (frameCount >= TOTAL_FRAMES) {
+        noLoop();
+        capturer.stop();
+        capturer.save();
+      }
+    }
+
+    function dibujarPieza(i, prog) {
+      let img = images[i];
+      if (!img) return;
+
+      // Ken Burns vertical: 0.9 -> 1.0
+      let zoom = 0.9 + (prog * 0.1);
+
+      // Ajuste al ancho del canvas portrait
+      let w = WIDTH * zoom;
+      let h = (img.height / img.width) * w;
+
+      image(img, WIDTH / 2, HEIGHT / 2, w, h);
+    }
+  </script>
+</body>
+
+</html>

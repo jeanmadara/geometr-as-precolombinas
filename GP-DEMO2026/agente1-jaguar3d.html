@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>GP-DEMO2025 // Agente 1: Jaguar 3D</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <script src="https://unpkg.com/ccapture.js@1.1.0/build/CCapture.all.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      overflow: hidden;
+    }
+
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+    const WIDTH = 1080;
+    const HEIGHT = 1920;
+    const FPS = 25;
+    const TOTAL_FRAMES = 250;
+
+    let modelObj;
+    let angle = 0;
+    let capturer;
+    let p5Canvas;
+
+    function preload() {
+      // Cargamos el modelo desde la ruta relativa al proyecto original
+      modelObj = loadModel('../scene1 3D/assets/tolita2.obj', true);
+    }
+
+    function setup() {
+      p5Canvas = createCanvas(WIDTH, HEIGHT, WEBGL);
+      frameRate(FPS);
+      angleMode(DEGREES);
+      capturer = new CCapture({ format: 'webm', framerate: FPS });
+    }
+
+    function draw() {
+
+      background(0);
+
+      // --- ANIMACIÓN DE RESPIRACIÓN ---
+      // 250 frames / 2 ciclos ≈ 0.05 de incremento por frame en radianes
+      // Usamos frameCount * 3 para tener una velocidad visualmente similar a la original (30fps -> 1.5, 25fps -> ~1.2)
+      // Pero para asegurar 2 ciclos exactos: (frameCount / 250) * TWO_PI * 2
+      let breathProg = (frameCount / TOTAL_FRAMES) * 360 * 2;
+      let breathScale = map(sin(breathProg), -1, 1, 1.0, 1.08);
+      let pulse = map(sin(breathProg), -1, 1, 150, 255);
+
+      // --- ESTILO ---
+      stroke(255, pulse, 100, 150);
+      strokeWeight(1.2);
+      noFill();
+
+      // --- TRANSFORMACIONES ---
+      rotateY(angle);
+
+      // Rotación progresiva según especificación
+      if (frameCount > 125) {
+        rotateX(angle * 0.5);
+      }
+
+      angle += 0.8; // Un poco más rápido para los 10 segundos
+
+      // Escala para ocupar ~70% del alto
+      // En 1920px, el 70% es ~1344px. El modelo normalizado suele estar en rango -100 a 100 o similar.
+      // Probamos con 7.0
+      scale(-10.0 * breathScale);
+
+      // --- RENDER ---
+      model(modelObj);
+
+      // --- CAPTURA ---
+      if (frameCount === 1) capturer.start();
+      capturer.capture(p5Canvas.canvas);
+      if (frameCount >= TOTAL_FRAMES) {
+        noLoop();
+        capturer.stop();
+        capturer.save();
+      }
+    }
+  </script>
+</body>
+
+</html>
